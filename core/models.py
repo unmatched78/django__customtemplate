@@ -23,39 +23,6 @@ class Timer(models.Model):
     
     class meta:
         abstract=True
-class CustomRole(models.Model):
-    name = models.CharField(max_length=100)
-    permissions = models.JSONField(default=list)
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="roles_created"
-    )
-
-    class Meta:
-        unique_together = ('name', 'organization')
-
-    def __str__(self):
-        return f"{self.name} - {self.organization.name}"
-
-class CustomUser(AbstractUser):
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    custom_role = models.ForeignKey(
-        CustomRole,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='users'
-    )
-
-    def get_roles(self):
-        return [self.custom_role.name] if self.custom_role else []
-
-    def has_permission(self, perm):
-        return self.custom_role and perm in self.custom_role.permissions
 
 # demo_model always necessary
 class DemoRequest(models.Model):
