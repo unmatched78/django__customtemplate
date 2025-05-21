@@ -5,19 +5,11 @@ from .models import *
 User = get_user_model()
 #serializers
 
-class CustomRoleSerializer(serializers.ModelSerializer):
-    created_by = serializers.PrimaryKeyRelatedField(read_only=True)
-
-    class Meta:
-        model = CustomRole
-        fields = ['id', 'name', 'permissions', 'created_at', 'created_by']
-
 class UserSerializer(serializers.ModelSerializer):
-    custom_role = serializers.PrimaryKeyRelatedField(queryset=CustomRole.objects.all(), allow_null=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'phone', 'custom_role']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'phone']
 class DemoRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model  = DemoRequest
