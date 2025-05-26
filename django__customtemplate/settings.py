@@ -77,12 +77,12 @@ if DEBUG == True:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+   }
 else:
     # Load the DATABASE_URL from environment variables
     DATABASES = {
     'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
-}
+    }
 
     
 
