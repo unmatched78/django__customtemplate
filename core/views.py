@@ -44,21 +44,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
-class CustomRoleViewSet(viewsets.ModelViewSet):
-    """CRUD for Custom Roles."""
-    queryset = CustomRole.objects.all()
-    serializer_class = CustomRoleSerializer
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, RolePermission]
-    required_permission = 'create_roles'
-
-class UserViewSet(viewsets.ModelViewSet, OrgQuerysetMixin):
-    """CRUD for Users within the same organization."""
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, RolePermission]
-    required_permission = 'view_users'
 class DemoRequestCreateAPIView(generics.CreateAPIView):
     queryset         = DemoRequest.objects.all()
     serializer_class = DemoRequestSerializer
