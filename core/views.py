@@ -13,9 +13,9 @@ from rest_framework import filters
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-User = get_user_model()
 from decimal import Decimal
 from django.db import transaction 
+User = get_user_model()
 # Module‐level logger
 logger = logging.getLogger(__name__)  # best practice for namespaced logging
 
