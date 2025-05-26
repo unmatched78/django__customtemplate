@@ -78,9 +78,9 @@ DATABASES = {
 }
 #other settings
 cloudinary.config(
-    cloud_name = '',        # Replace with your cloud name
-    api_key = '',              # Replace with your API key
-    api_secret = ''         # Replace with your API secret
+    cloud_name = os.getenv('cloudinary_cloud_name')       # Replace with your cloud name
+    api_key = os.getenv('cloudinary_api_key')          # Replace with your API key
+    api_secret = os.getenv('cloudinary_api_secret')        # Replace with your API secret
 )
 
 CORS_ALLOW_ALL_ORIGINS = True
