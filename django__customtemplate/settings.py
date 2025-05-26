@@ -76,6 +76,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+import dj_database_url
+# Load the DATABASE_URL from environment variables
+DATABASES = {
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+}
+
 #clodunary settings
 cloudinary.config(
     cloud_name = os.getenv('cloudinary_cloud_name')       # Replace with your cloud name
