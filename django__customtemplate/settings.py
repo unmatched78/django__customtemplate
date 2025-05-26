@@ -105,16 +105,15 @@ else:
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
+],  
+    #cloudinary settings
+    cloudinary.config(
+        cloud_name = os.getenv('cloudinary_cloud_name')       # Replace with your cloud name
+        api_key = os.getenv('cloudinary_api_key')          # Replace with your API key
+        api_secret = os.getenv('cloudinary_api_secret')        # Replace with your API secret
+    )
 
-    
 
-#cloudinary settings
-cloudinary.config(
-    cloud_name = os.getenv('cloudinary_cloud_name')       # Replace with your cloud name
-    api_key = os.getenv('cloudinary_api_key')          # Replace with your API key
-    api_secret = os.getenv('cloudinary_api_secret')        # Replace with your API secret
-)
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
 EMAIL_HOST = 'smtp.gmail.com'  
