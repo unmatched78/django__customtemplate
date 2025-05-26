@@ -17,26 +17,6 @@ User = get_user_model()
 # Module‐level logger
 logger = logging.getLogger(__name__)  # best practice for namespaced logging
 
-
-class RolePermission(BasePermission):
-    """
-    Grants access only if `request.user.has_permission(required_permission)` is True.
-    Each ViewSet must define `required_permission` attribute.
-    """
-    def has_permission(self, request, view):
-        perm = getattr(view, 'required_permission', None)
-        allowed = request.user.is_authenticated and (perm is None or has_permission(request.user, perm))
-        logger.debug(f"Permission check for '{perm}' on user '{request.user}': {allowed}")
-        return allowed
-
-# Utility mixin to scope querysets to the user's 
-class OrgQuerysetMixin:
-    def get_queryset(self):
-        org = self.request.user.organization
-        qs = super().get_queryset().filter(organization=org)
-        logger.debug(f"{self.__class__.__name__} queryset filtered to org {org}: {qs.count()} items")
-        return qs
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         # Call the base class to get the original tokens
