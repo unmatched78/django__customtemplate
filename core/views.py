@@ -2,10 +2,9 @@
 import logging
 from rest_framework import viewsets, status, generics, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.permissions import IsAuthenticated, BasePermission, AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view, permission_classes, authentication_classes, api_view, permission_classes
-from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 from .models import *
 from rest_framework import filters
