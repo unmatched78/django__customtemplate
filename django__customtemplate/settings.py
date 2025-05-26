@@ -13,7 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG_STATE')
+# Convert DEBUG to boolean
+DEBUG = os.getenv('DEBUG_STATE', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ["*"]
 
@@ -71,48 +72,62 @@ WSGI_APPLICATION = 'django__customtemplate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if DEBUG == True:
+# Development Mode Settings
+if DEBUG:
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-   },
-   STATIC_URL = "static/"
-   #STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-   STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-   
-   # # Media files (uploaded images, videos)
-   
-   MEDIA_URL = "/media/"
-   MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-   
+    STATIC_URL = "static/"
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Production Mode Settings
 else:
-    # Load the DATABASE_URL from environment variables
     DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
-    },
+        'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    }
+    
+    # Password validation (should be outside if/else for security)
     AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-],  
-    #cloudinary settings
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ]
+    
+    # Cloudinary configuration
     cloudinary.config(
-        cloud_name = os.getenv('cloudinary_cloud_name')       # Replace with your cloud name
-        api_key = os.getenv('cloudinary_api_key')          # Replace with your API key
-        api_secret = os.getenv('cloudinary_api_secret')        # Replace with your API secret
+        cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+        api_key=os.getenv('CLOUDINARY_API_KEY'),
+        api_secret=os.getenv('CLOUDINARY_API_SECRET')
     )
 
+# Security settings for production)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+else:
+    ALLOWED_HOSTS = ["*"]
+
+# Keep these outside the if/else blocks
+SESSION_COOKIE_AGE = 1800
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_SAVE_EVERY_REQUEST = False
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
@@ -166,4 +181,5 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS')
+# CORS settings (convert to boolean)
+CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False').lower() == 'true'
