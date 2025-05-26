@@ -11,7 +11,6 @@ from django.contrib.auth import get_user_model
 from .models import *
 from rest_framework import filters
 from .serializers import *
-from .permissions import require_permission, has_permission
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 User = get_user_model()
