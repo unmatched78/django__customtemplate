@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import sys
 from datetime import timedelta
+import dj_database_url
 from dotenv import load_dotenv
 load_dotenv()
 import cloudinary
@@ -70,14 +71,15 @@ WSGI_APPLICATION = 'django__customtemplate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+if DEBUG == True:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-import dj_database_url
+else:
+    
 # Load the DATABASE_URL from environment variables
 DATABASES = {
     'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
