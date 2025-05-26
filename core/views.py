@@ -42,7 +42,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
     def perform_create(self, serializer):
-        logger.info(f"{self.request.user} creating organization {serializer.validated_data.get('name')}")
         serializer.save(created_by=self.request.user)
 
 class CustomRoleViewSet(viewsets.ModelViewSet):
