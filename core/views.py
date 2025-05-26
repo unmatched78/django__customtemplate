@@ -1,4 +1,4 @@
-# core/views.py1
+# core/views.py
 import logging
 from rest_framework import viewsets, status
 from rest_framework_simplejwt.authentication import JWTAuthentication
