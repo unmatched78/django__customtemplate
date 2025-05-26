@@ -77,9 +77,14 @@ if DEBUG == True:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-   }, 
+   }
    
-   AUTH_PASSWORD_VALIDATORS = [
+else:
+    # Load the DATABASE_URL from environment variables
+    DATABASES = {
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    },
+    AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -93,11 +98,6 @@ if DEBUG == True:
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-else:
-    # Load the DATABASE_URL from environment variables
-    DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
-    }
 
     
 
