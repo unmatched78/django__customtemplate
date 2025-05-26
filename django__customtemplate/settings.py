@@ -124,7 +124,7 @@ if not DEBUG:
 else:
     ALLOWED_HOSTS = ["*"]
 
-# Keep these outside the if/else blocks
+# Session settings
 SESSION_COOKIE_AGE = 1800
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = False
@@ -148,11 +148,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
-#Session settings
-SESSION_COOKIE_AGE = 1800  # Session lasts for 30 minutes
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Keep session even if browser is closed (if desired)
-SESSION_SAVE_EVERY_REQUEST = False  # Refresh session on each request
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
