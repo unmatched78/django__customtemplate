@@ -26,9 +26,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'id':       self.user.id,
             'username': self.user.username,
             'email':    self.user.email,
-            # Likewise for role—grab the name or id
-            'role': self.user.custom_role.name if self.user.custom_role else None,
-            # 'role_id': user.custom_role.id if user.custom_role else None,
             # add more fields as needed
         }
         return data
