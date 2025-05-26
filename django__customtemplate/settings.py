@@ -9,7 +9,7 @@ import cloudinary
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s-#l@7l1)5!4f39dgesp=gu+(w!!8%ey6v)0m5c(5#-c23_6dv'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG_STATE')
