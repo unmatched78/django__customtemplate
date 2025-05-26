@@ -1,6 +1,6 @@
 # core/views.py
 import logging
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
@@ -15,7 +15,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 User = get_user_model()
 from decimal import Decimal
-from rest_framework import generics, permissions
 from django.db import transaction 
 # Module‐level logger
 logger = logging.getLogger(__name__)  # best practice for namespaced logging
