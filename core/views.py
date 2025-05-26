@@ -16,8 +16,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 User = get_user_model()
 from decimal import Decimal
 from rest_framework import generics, permissions
-from django.db import transaction
-from .permissions import AVAILABLE_PERMISSIONS   
+from django.db import transaction 
 # Module‐level logger
 logger = logging.getLogger(__name__)  # best practice for namespaced logging
 
