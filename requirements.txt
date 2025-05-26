@@ -4,13 +4,12 @@ cloudinary
 pillow
 djangorestframework 
 djangorestframework-simplejwt
-gunicorn==21.2.0
+gunicorn
 psycopg2-binary
-django-cors-headers==4.6.0
-sqlparse==0.5.1
-virtualenv==20.26.3
+django-cors-headers
+sqlparse
+virtualenv
 requests
 django-role-permissions
-daphne 
 watchfiles
 #add more as needed
