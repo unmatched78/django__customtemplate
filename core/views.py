@@ -34,7 +34,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         # --- Inject these claims into BOTH access & refresh tokens ---
         token['user_id']     = user.id
-        token['role']        = user.custom_role.name if user.custom_role else None
         return token
     
 
