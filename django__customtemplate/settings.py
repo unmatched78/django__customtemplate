@@ -79,11 +79,12 @@ if DEBUG == True:
     }
 }
 else:
-    
-# Load the DATABASE_URL from environment variables
-DATABASES = {
+    # Load the DATABASE_URL from environment variables
+    DATABASES = {
     'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
 }
+
+    
 
 #clodunary settings
 cloudinary.config(
