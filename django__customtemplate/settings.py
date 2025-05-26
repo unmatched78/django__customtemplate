@@ -76,7 +76,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-#other settings
+#clodunary settings
 cloudinary.config(
     cloud_name = os.getenv('cloudinary_cloud_name')       # Replace with your cloud name
     api_key = os.getenv('cloudinary_api_key')          # Replace with your API key
