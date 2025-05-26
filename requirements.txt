@@ -12,4 +12,5 @@ virtualenv
 requests
 django-role-permissions
 watchfiles
+dj-database-url
 #add more as needed
