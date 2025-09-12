@@ -33,3 +33,8 @@ DATABASES = {
         api_secret=os.getenv('CLOUDINARY_API_SECRET')
     )
 CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False').lower() == 'true'
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
