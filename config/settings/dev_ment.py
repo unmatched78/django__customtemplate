@@ -1,20 +1,29 @@
-import .base
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+from .base import *
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Convert DEBUG to boolean
-DEBUG = os.getenv('DEBUG_STATE', 'False').lower() == 'true'
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# Development-specific settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Additional development apps
+INSTALLED_APPS += [
+    'django_extensions',
+    'debug_toolbar',
+]
+
+MIDDLEWARE += [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+# Debug toolbar
+INTERNAL_IPS = ['127.0.0.1']
+
+# Database (SQLite for development)
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False').lower() == 'true'
+}
