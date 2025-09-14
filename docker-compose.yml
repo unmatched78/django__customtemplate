@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - DATABASE_URL=postgresql://postgres:password@db:5432/myproject
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: myproject
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6-alpine
+
+  celery:
+    build: .
+    command: celery -A config worker -l info
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DEBUG=False
+      - DATABASE_URL=postgresql://postgres:password@db:5432/myproject
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
