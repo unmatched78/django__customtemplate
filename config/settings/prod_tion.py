@@ -1,41 +1,24 @@
-import .base
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+from .base import *
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Convert DEBUG to boolean
-DEBUG = os.getenv('DEBUG_STATE', 'False').lower() == 'true'
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
-DATABASES = {
-        'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
-    }
-    
-    # Password validation (should be outside if/else for security)
-    AUTH_PASSWORD_VALIDATORS = [
-        {
-            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-        },
-    ]
-    
-    # Cloudinary configuration
-    cloudinary.config(
-        cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
-        api_key=os.getenv('CLOUDINARY_API_KEY'),
-        api_secret=os.getenv('CLOUDINARY_API_SECRET')
-    )
-CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False').lower() == 'true'
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
+
+# Security settings
 SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Static files storage
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files (use cloud storage in production)
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
